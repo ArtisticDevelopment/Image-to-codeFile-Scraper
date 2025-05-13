@@ -8,6 +8,7 @@ try:
     pytesseract.get_tesseract_version()
 except pytesseract.TesseractNotFoundError:
     print("❌ Tesseract is not in your PATH or not installed.")
+    exit()
 
 root = Tk()
 root.withdraw() #closes TK window
