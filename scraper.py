@@ -53,11 +53,9 @@ except pytesseract.TesseractNotFoundError:
 root = Tk()
 root.withdraw() #closes TK window
 printSlow("Select your text image...")
-#opens local window for user to select image
-
 #declaring valid file extensions
 valid_extensions = [".png",".jpg",".jpeg",".bmp",".tiff"]
-#opening local file storage for user
+#opening local file storage for user to select image
 image_path = filedialog.askopenfilename(
   title="Choose A Screenshot of Python Code (nothing more...nothing less)",
   filetypes=[(f"Image files", "*.png *.jpg *.bmp *.tifff")]
@@ -88,12 +86,41 @@ if not text:
   printSlow("Looks like the photo you selected doesn't have any readable text, sorry!")
   printSlow("Shutting down...")
   sys.exit()
-#creates a new file, writes text to file, then closes
+  
+#gives user option to choose extension, then creates
+#a new file, writes text to file, then closes
 try:
-  image_text = open("image_text.py","x")
-  image_text.write(text)
-  printSlow(f"Your text file was written into image_text.py")
-  image_text.close()
+  acceptable_answers = {
+    ".js javascript JavaScript JAVASCRIPT js": ".js", 
+    ".py py python Python PYTHON":".py"
+  }
+  
+  while True:
+    printSlow("So, do you want a .py or .js extension?: ", end="")
+    user_input = input().lower()
+    
+    for key, extension in acceptable_answers.items():
+      if user_input in key.split():
+        found=True
+        with open(f"image_text{extension}", "x") as image_text:
+          image_text.write(text)
+          
+        printSlow("Okay one sec...", end="")
+        time.sleep(2)
+        printSlow("Okie dokie!")
+        time.sleep(0.5)
+        printSlow(f"Your text file was written into image_text.py")
+        sys.exit()
+        
+    printSlow("Ugh...", end="")
+    time.sleep(1.5)
+    printSlow("Listen...", end="")
+    time.sleep(1.5)
+    printSlow("We both know that input isn't gonna work...")
+        
+      
+        
+  
   #OVERWITE-block... if file already exists, gives option to overwrite
 except FileExistsError:
   userinputResponse()
