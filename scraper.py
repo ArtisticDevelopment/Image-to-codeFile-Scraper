@@ -117,9 +117,6 @@ try:
     printSlow("Listen...", end="")
     time.sleep(1.5)
     printSlow("We both know that input isn't gonna work...")
-        
-      
-        
   
   #OVERWITE-block... if file already exists, gives option to overwrite
 except FileExistsError:
